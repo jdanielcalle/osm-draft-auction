@@ -1,16 +1,64 @@
-# React + Vite
+# ⚽ OSM Draft 2026
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Plataforma de subastas de jugadores en tiempo real construida con:
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/-ReactJs-61DAFB?logo=react&logoColor=white&style=for-the-badge)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=Vite&logoColor=white)
+![Firebase](https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+OSM Draft 2026 es un sistema de pujas en vivo donde múltiples presidentes compiten en tiempo real para construir sus equipos mediante un sistema dinámico de subastas.
 
-## React Compiler
+---
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+## 🚀 Demo en vivo
 
-## Expanding the ESLint configuration
+🌐 https://osmdraft2026.web.app/
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🧠 Funcionalidades
+
+- 🔐 Autenticación con Firebase (acceso por roles)
+- 👑 Panel de Administrador
+- 🏛 Panel de Presidente
+- 📡 Sincronización de pujas en tiempo real con Firestore
+- ⏱ Temporizador de subasta en vivo
+- 🚫 Validación de pujas (no permite ofertas menores)
+- 🔄 Cierre automático de subastas
+- 💰 Control de presupuesto por presidente
+- 🎯 Gestión de estado de jugadores (disponible / vendido)
+- 📱 Interfaz responsive con TailwindCSS
+
+---
+
+## 🏗 Tecnologías utilizadas
+
+- **Frontend:** React 19 + Vite
+- **Estilos:** TailwindCSS
+- **Animaciones:** Framer Motion
+- **Backend:** Firebase
+  - Firestore (base de datos en tiempo real)
+  - Firebase Authentication
+  - Firebase Hosting
+
+---
+
+## 🔐 Roles del sistema
+
+### 🛠 Administrador
+- Crear, editar y eliminar jugadores
+- Iniciar y cerrar subastas
+- Monitorear pujas en vivo
+- Visualizar equipos y presupuestos de los presidentes
+
+### 👔 Presidente
+- Participar en subastas en tiempo real
+- Realizar pujas
+- Consultar presupuesto disponible
+- Gestionar plantilla de jugadores
+
+---
+
+## 👨‍💻 Miembros
+
+- [Jair Daniel Calle Sinitave](https://www.linkedin.com/in/jdanielcalle/)

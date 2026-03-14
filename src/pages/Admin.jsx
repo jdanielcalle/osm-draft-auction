@@ -77,7 +77,7 @@ export default function Admin() {
       const playerSnap = await getDoc(playerRef);
       const playerData = playerSnap.data();
 
-      if (!playerData) return;
+      if (!playerData || playerData.status === "sold") return;
 
       const timeLeft =
         playerData.auctionEndTime - Date.now();
@@ -173,7 +173,7 @@ export default function Admin() {
     });
 
     await updateDoc(doc(db, "players", playerId), {
-      auctionEndTime: Date.now() + 90000,
+      auctionEndTime: Date.now() + 30000,
       currentBid: 0,
       currentLeader: "",
       status: "available",

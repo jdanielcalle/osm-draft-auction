@@ -183,9 +183,17 @@ export default function President() {
     if (president.budget < bidAmount) return;
     if (president.playersCount >= president.maxPlayers) return;
 
+    const now = Date.now();
+    let newEndTime = freshData.auctionEndTime;
+
+    if (freshData.auctionEndTime - now <= 10000) {
+      newEndTime = now + 10000;
+    }
+
     await updateDoc(doc(db, "players", activePlayer.id), {
       currentBid: bidAmount,
       currentLeader: user.uid,
+      auctionEndTime: newEndTime,
     });
   };
 

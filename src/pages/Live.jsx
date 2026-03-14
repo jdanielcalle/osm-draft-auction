@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useEffect, useState } from "react";
 import { collection, doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
@@ -7,6 +8,19 @@ export default function Live() {
   const [presidents, setPresidents] = useState([]);
   const [auction, setAuction] = useState(null);
   const [timeLeft, setTimeLeft] = useState(0);
+
+  const playersByPresident = useMemo(() => {
+    const map = {};
+
+    players.forEach((pl) => {
+      if (pl.status === "sold" && pl.currentLeader) {
+        if (!map[pl.currentLeader]) map[pl.currentLeader] = [];
+        map[pl.currentLeader].push(pl);
+      }
+    });
+
+    return map;
+  }, [players]);
 
   useEffect(() => {
     const unsubPlayers = onSnapshot(collection(db, "players"), (snapshot) => {
@@ -34,25 +48,25 @@ export default function Live() {
     };
   }, []);
 
-  const activePlayer = players.find(
-    (p) => p.id === auction?.activePlayerId
-  );
+  const activePlayer = useMemo(() => {
+    return players.find((p) => p.id === auction?.activePlayerId);
+  }, [players, auction]);
 
   const leader = presidents.find(
     (p) => p.id === activePlayer?.currentLeader
-  );
+  ) || null;
 
   useEffect(() => {
     if (!activePlayer?.auctionEndTime) return;
 
     const interval = setInterval(() => {
-      const remaining =
-        Math.floor((activePlayer.auctionEndTime - Date.now()) / 1000);
+      const remaining = Math.floor(
+        (activePlayer.auctionEndTime - Date.now()) / 1000);
       setTimeLeft(remaining > 0 ? remaining : 0);
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [activePlayer]);
+  }, [activePlayer?.auctionEndTime]);
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center py-10 text-white">
@@ -84,26 +98,16 @@ export default function Live() {
         )}
 
         {/* TABLA EQUIPOS */}
-        <div className="overflow-x-auto">
-          <div
-            className="grid gap-4"
-            style={{
-              gridTemplateColumns: `repeat(${presidents.length}, minmax(220px, 1fr))`
-            }}
-          >
+        <div className="grid grid-cols-5 gap-4">
             {presidents.map((p) => {
 
               // Obtener jugadores vendidos de este presidente
-              const soldPlayers = players.filter(
-                (pl) =>
-                  pl.status === "sold" &&
-                  pl.currentLeader === p.id
-              );
+              const soldPlayers = playersByPresident[p.id] || [];
 
               return (
                 <div
                   key={p.id}
-                  className="bg-gray-800 rounded-xl p-4"
+                  className="bg-gray-800 rounded-xl p-3 text-sm"
                 >
                   <h3 className="text-center font-bold text-lg">
                     {p.name}
@@ -140,6 +144,5 @@ export default function Live() {
         </div>
 
       </div>
-    </div>
   );
 }

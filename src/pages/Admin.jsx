@@ -108,10 +108,9 @@ export default function Admin() {
         const winnerData = winnerSnap.data();
 
         await updateDoc(winnerRef, {
-          budget:
-            winnerData.budget - playerData.currentBid,
-          playersCount:
-            winnerData.playersCount + 1,
+          budget: winnerData.budget - playerData.currentBid,
+          playersCount: winnerData.playersCount + 1,
+          players: [...(winnerData.players || []), playerData.name]
         });
 
         await updateDoc(playerRef, {
